@@ -5,7 +5,7 @@ import { CloseButton } from "./CloseButton"
 import { useNavigate } from "react-router-dom"
 
 export const LogInForm = () => {
-  const url = "https://js-project-api-mk0z.onrender.com/users"
+  const url = "https://js-project-api-mk0z.onrender.com/users/login"
   // Local API
   // const url = "http://localhost:8080/users/login"
   const navigate = useNavigate()
@@ -14,8 +14,6 @@ export const LogInForm = () => {
     email: "",
     password: "",
   })
-
-
 
 
   const handleSubmit = (event) => {
