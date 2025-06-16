@@ -14,15 +14,14 @@ export const MainSection = () => {
   const [apiError, setApiError] = useState("")
   const [likedCount, setLikedCount] = useState(0)
   const [showAuthError, setShowAuthError] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("accessToken"))
   const userId = localStorage.getItem("userId")
 
   // const url = "https://happy-thoughts-api-4ful.onrender.com/thoughts"
   //Local API
-  const url = "http://localhost:8080/thoughts"
+  // const url = "http://localhost:8080/thoughts"
 
   //My render url 
-  // const url = "https://js-project-api-mk0z.onrender.com/thoughts"
+  const url = "https://js-project-api-mk0z.onrender.com/thoughts"
 
 
   const fetchData = () => {
@@ -183,7 +182,7 @@ export const MainSection = () => {
       {likedCount > 0 && <LikeCount likeCount={likedCount} />}
 
       {showAuthError && <AuthorizationError errMessage={apiError}
-      onClose={handleCloseAuthError} />}
+        onClose={handleCloseAuthError} />}
 
       <MessageList
         userId={userId}

@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 export const EditForm = ({ onCancel, messageId, onEdit, initialMessage }) => {
   const [message, setMessage] = useState(initialMessage || "")
-  // const url = "https://js-project-api-mk0z.onrender.com/thoughts"
+  const url = "https://js-project-api-mk0z.onrender.com/thoughts"
   // Local API
-  const url = "http://localhost:8080/thoughts"
+  // const url = "http://localhost:8080/thoughts"
 
 
   const handleSubmit = (e) => {

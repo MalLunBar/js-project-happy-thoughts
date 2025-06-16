@@ -12,9 +12,9 @@ export const SignUpForm = () => {
     password: ""
   })
 
-  // const url = "https://js-project-api-mk0z.onrender.com/users"
+  const url = "https://js-project-api-mk0z.onrender.com/users"
   // Local API
-  const url = "http://localhost:8080/users/signup"
+  // const url = "http://localhost:8080/users/signup"
 
 
   const handleSubmit = (event) => {
@@ -90,7 +90,9 @@ export const SignUpForm = () => {
         required={true}
         autoComplete="off"
       />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      <button
+        type="submit"
+        className="bg-blue-500 text-white p-2 rounded">
         Sign Up
       </button>
     </form>
