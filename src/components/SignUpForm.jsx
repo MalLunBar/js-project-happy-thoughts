@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { FormInput } from "./FormInput"
 import { CloseButton } from "./CloseButton"
+import { useNavigate } from "react-router-dom"
 
 
 export const SignUpForm = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,6 +38,7 @@ export const SignUpForm = () => {
 
         // Clear the form fields after successful signup
         setFormData({ name: "", email: "", password: "" })
+        navigate("/login")
 
       })
       .catch(err => {

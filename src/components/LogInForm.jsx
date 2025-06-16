@@ -2,16 +2,20 @@ import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import { FormInput } from "./FormInput"
 import { CloseButton } from "./CloseButton"
+import { useNavigate } from "react-router-dom"
 
 export const LogInForm = () => {
   // const url = "https://js-project-api-mk0z.onrender.com/users"
   // Local API
   const url = "http://localhost:8080/users/login"
+  const navigate = useNavigate()
   const [error, setError] = useState("")
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
+
+
 
 
   const handleSubmit = (event) => {
@@ -26,7 +30,10 @@ export const LogInForm = () => {
 
     fetch(url, {
       method: "POST",
-      body: JSON.stringify({ email: formData.email, password: formData.password }),
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password
+      }),
       headers: {
         "Content-Type": "application/json"
       }
@@ -43,7 +50,8 @@ export const LogInForm = () => {
         if (accessToken && userId) {
           localStorage.setItem("accessToken", accessToken)
           localStorage.setItem("userId", userId)
-          console.log("logged in, token saved")
+          navigate("/")
+
         }
         setFormData({ email: "", password: "" })
       })
