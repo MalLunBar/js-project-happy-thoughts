@@ -70,7 +70,7 @@ export const MainSection = () => {
       })
       .then(newMessage => {
         setMessages(prev => [newMessage.response, ...prev])
-        console.log(newMessage)
+        
       })
       .catch(err => setApiError(err.message))
   }
@@ -78,7 +78,6 @@ export const MainSection = () => {
   const likeMessage = (id) => {
     setApiError("")
 
-    console.log(id)
     fetch(`${url}/${id}/like`, {
       method: "PATCH",
     })
@@ -103,7 +102,6 @@ export const MainSection = () => {
 
     const accessToken = localStorage.getItem("accessToken")
 
-    console.log("sending to server:", id, message)
     setApiError("")
     fetch(`${url}/${id}/edit`, {
       method: "PATCH",
