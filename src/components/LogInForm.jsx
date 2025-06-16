@@ -40,7 +40,13 @@ export const LogInForm = () => {
     })
       .then(res => {
         if (!res.ok) {
-          throw new Error("Login failed")
+          if (res.status === 401) {
+            throw new Error("Incorrect email or password.")
+          } else if (res.status === 404) {
+            throw new Error("User not found.")
+          } else {
+            throw new Error("Something went wrong. Please try again.")
+          }
         }
         return res.json()
 
@@ -56,8 +62,7 @@ export const LogInForm = () => {
         setFormData({ email: "", password: "" })
       })
       .catch(error => {
-        console.log("Login error:", error.message)
-        setError("Login failed. Please check your credentials.")
+        setError(error.message)
       })
 
   }
@@ -96,6 +101,11 @@ export const LogInForm = () => {
         autoComplete="off"
 
       />
+      {error && (
+        <p className="text-red-600 text-sm text-center font-medium">
+          {error}
+        </p>
+      )}
       <p>Dont have an account yet?</p>
       <NavLink
         to="/signup" className="underline hover:text-blue-900 hover:decoration-wavy">Sign up
