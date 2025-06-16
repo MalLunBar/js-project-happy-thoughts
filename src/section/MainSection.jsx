@@ -13,6 +13,7 @@ export const MainSection = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [apiError, setApiError] = useState("")
   const [likedCount, setLikedCount] = useState(0)
+  const [showAuthError, setShowAuthError] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("accessToken"))
   const userId = localStorage.getItem("userId")
 
@@ -61,8 +62,8 @@ export const MainSection = () => {
           if (res.status === 401) {
             localStorage.removeItem("accessToken")
             localStorage.removeItem("userId")
-            setIsLoggedIn(false)
-            throw new Error("You need to be logged in to post a thought")
+            setShowAuthError(true)
+            throw new Error("You need to be logged in to post a thought!")
           }
           throw new Error("Could not save your thought")
         }
@@ -161,6 +162,11 @@ export const MainSection = () => {
     setLikedCount(c => c + 1)
   }
 
+  const handleCloseAuthError = () => {
+    setShowAuthError(false)
+    setApiError("")
+  }
+
 
 
   useEffect(() => {
@@ -176,7 +182,8 @@ export const MainSection = () => {
       {isLoading && <Loader />}
       {likedCount > 0 && <LikeCount likeCount={likedCount} />}
 
-      {!isLoggedIn && <AuthorizationError />}
+      {showAuthError && <AuthorizationError errMessage={apiError}
+      onClose={handleCloseAuthError} />}
 
       <MessageList
         userId={userId}

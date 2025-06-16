@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import { FormInput } from "./FormInput"
+import { CloseButton } from "./CloseButton"
 
 export const LogInForm = () => {
   // const url = "https://js-project-api-mk0z.onrender.com/users"
@@ -11,6 +12,7 @@ export const LogInForm = () => {
     email: "",
     password: "",
   })
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -58,6 +60,7 @@ export const LogInForm = () => {
     <form
       onSubmit={handleSubmit}
       className="flex flex-col gap-4 m-4 border p-4 shadow-[10px_10px] shadow-black bg-gray-100 rounded-xs">
+      <CloseButton />
       <h1 className="text-2xl font-bold text-center mb-2">
         Login to your account
       </h1>
