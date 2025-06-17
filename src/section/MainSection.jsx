@@ -14,6 +14,8 @@ export const MainSection = () => {
   const [apiError, setApiError] = useState("")
   const [likedCount, setLikedCount] = useState(0)
   const [showAuthError, setShowAuthError] = useState(false)
+  const [sortOrder, setSortOrder] = useState("desc")
+  const [minHearts, setMinHearts] = useState("")
   const userId = localStorage.getItem("userId")
 
   // const url = "https://happy-thoughts-api-4ful.onrender.com/thoughts"
@@ -27,13 +29,32 @@ export const MainSection = () => {
   const fetchData = () => {
     setIsLoading(true)
     setApiError("")
-    fetch(url)
+
+    const params = new URLSearchParams()
+
+    if (minHearts) {
+      params.append("minLikes", minHearts)
+    }
+
+    const fetchUrl = `${url}?${params.toString()}`
+
+    fetch(fetchUrl)
       .then(res => res.json())
       .then(data => {
         if (!data.success) {
           throw new Error("API response indicated failure")
         }
-        setMessages(data.response)
+
+        let sortedMessages = [...data.response]
+        sortedMessages.sort((a, b) => {
+          if (sortOrder === "asc") {
+            return new Date(a.createdAt) - new Date(b.createdAt)
+          } else {
+            return new Date(b.createdAt) - new Date(a.createdAt)
+          }
+        })
+
+        setMessages(sortedMessages)
 
       })
       .catch(err => {
@@ -70,7 +91,7 @@ export const MainSection = () => {
       })
       .then(newMessage => {
         setMessages(prev => [newMessage.response, ...prev])
-        
+
       })
       .catch(err => setApiError(err.message))
   }
@@ -168,10 +189,10 @@ export const MainSection = () => {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [sortOrder, minHearts])
 
   return (
-    <section className="max-w-md min-h-screen px-5 py-10 mx-auto">
+    <section className="max-w-md min-h-screen p-5 mx-auto">
       <FormCard
         onSubmit={addMessage}
         apiError={apiError} />
@@ -181,6 +202,24 @@ export const MainSection = () => {
 
       {showAuthError && <AuthorizationError errMessage={apiError}
         onClose={handleCloseAuthError} />}
+
+      <div className="flex justify-between items-center mb-4 my-4">
+        <select
+          onChange={(e) => setSortOrder(e.target.value)}
+          value={sortOrder}>
+          <option value="desc">Newest First</option>
+          <option value="asc">Oldest First</option>
+        </select>
+
+        <select
+          onChange={(e) => setMinHearts(e.target.value)}
+          value={minHearts}>
+          <option value="">All hearts</option>
+          <option value="5">5+ hearts</option>
+          <option value="10">10+ hearts</option>
+          <option value="20">20+ hearts</option>
+        </select>
+      </div>
 
       <MessageList
         userId={userId}
