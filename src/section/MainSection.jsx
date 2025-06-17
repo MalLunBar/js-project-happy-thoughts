@@ -18,10 +18,10 @@ export const MainSection = () => {
 
   // const url = "https://happy-thoughts-api-4ful.onrender.com/thoughts"
   //Local API
-  // const url = "http://localhost:8080/thoughts"
+  const url = "http://localhost:8080/thoughts"
 
   //My render url 
-  const url = "https://js-project-api-mk0z.onrender.com/thoughts"
+  // const url = "https://js-project-api-mk0z.onrender.com/thoughts"
 
 
   const fetchData = () => {

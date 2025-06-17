@@ -12,9 +12,9 @@ export const SignUpForm = () => {
     password: ""
   })
 
-  const url = "https://js-project-api-mk0z.onrender.com/users/signup"
+  // const url = "https://js-project-api-mk0z.onrender.com/users/signup"
   // Local API
-  // const url = "http://localhost:8080/users/signup"
+  const url = "http://localhost:8080/users/signup"
 
 
   const handleSubmit = (event) => {
