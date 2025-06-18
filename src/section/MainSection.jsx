@@ -16,6 +16,7 @@ export const MainSection = () => {
   const [showAuthError, setShowAuthError] = useState(false)
   const [sortOrder, setSortOrder] = useState("desc")
   const [minHearts, setMinHearts] = useState("")
+  const [showLikedOnly, setShowLikedOnly] = useState(false)
   const userId = localStorage.getItem("userId")
 
   // const url = "https://happy-thoughts-api-4ful.onrender.com/thoughts"
@@ -30,33 +31,35 @@ export const MainSection = () => {
     setIsLoading(true)
     setApiError("")
 
+    const accessToken = localStorage.getItem("accessToken")
+
     const params = new URLSearchParams()
+    if (minHearts) params.append("minLikes", minHearts)
 
-    if (minHearts) {
-      params.append("minLikes", minHearts)
-    }
+    const fetchUrl = showLikedOnly
+      ? `${url}/liked${params.toString() ? "?" + params.toString() : ""}`
+      : `${url}?${params.toString()}`
 
-    const fetchUrl = `${url}?${params.toString()}`
-
-    fetch(fetchUrl)
-      .then(res => res.json())
-      .then(data => {
-        if (!data.success) {
-          throw new Error("API response indicated failure")
+    fetch(fetchUrl, {
+      headers: {
+        ...(accessToken && { Authorization: accessToken })
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch messages")
         }
-
-        let sortedMessages = [...data.response]
-        sortedMessages.sort((a, b) => {
-          if (sortOrder === "asc") {
-            return new Date(a.createdAt) - new Date(b.createdAt)
-          } else {
-            return new Date(b.createdAt) - new Date(a.createdAt)
-          }
-        })
-
-        setMessages(sortedMessages)
-
+        return res.json()
       })
+      .then(data => {
+        let sortedMessages = [...data.response].sort((a, b) => {
+          return sortOrder === "asc"
+            ? new Date(a.createdAt) - new Date(b.createdAt)
+            : new Date(b.createdAt) - new Date(a.createdAt)
+        })
+        setMessages(sortedMessages)
+      })
+
       .catch(err => {
         console.error(err)
         setApiError("Could not load messages. Please try again later")
@@ -98,13 +101,24 @@ export const MainSection = () => {
 
   const likeMessage = (id) => {
     setApiError("")
+    const accessToken = localStorage.getItem("accessToken")
 
     fetch(`${url}/${id}/like`, {
       method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken && { Authorization: accessToken })
+      }
+
     })
-      .then(res => {
-        if (!res.ok) throw new Error("Could not like thought")
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((error) => {
+            throw new Error(error.message || "Failed to like the thought")
+          })
+        }
         return res.json()
+
       })
       .then(updatedLikes => {
         setMessages(prev =>
@@ -185,14 +199,18 @@ export const MainSection = () => {
     setApiError("")
   }
 
-
-
   useEffect(() => {
     fetchData()
-  }, [sortOrder, minHearts])
+  }, [sortOrder, minHearts, showLikedOnly])
 
   return (
     <section className="max-w-md min-h-screen p-5 mx-auto">
+      <button
+        onClick={() => setShowLikedOnly(prev => !prev)}
+        className="bg-pink-200 text-black px-3 py-1 rounded shadow"
+      >
+        {showLikedOnly ? "Show All Thoughts" : "Show My Liked Thoughts"}
+      </button>
       <FormCard
         onSubmit={addMessage}
         apiError={apiError} />
