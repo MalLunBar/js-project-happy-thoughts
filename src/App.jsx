@@ -14,7 +14,7 @@ export const App = () => {
           element={
             <>
               <Header />
-              <section className="max-w-md min-h-screen px-5 py-10 mx-auto">
+              <section className="max-w-md min-h-screen px-5 mx-auto">
                 <MainSection />
               </section>
             </>
