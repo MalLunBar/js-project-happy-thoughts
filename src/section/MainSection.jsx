@@ -201,9 +201,9 @@ export const MainSection = () => {
       {userId && (
         <button
           onClick={() => setShowLikedOnly(prev => !prev)}
-          className="text-black px-3 py-1 mb-2 rounded shadow"
+          className="bg-gray-200 text-fuchsia-950 px-3 py-1 mb-5 rounded-2xl shadow"
         >
-          {showLikedOnly ? "🖤 Show All Thoughts" : "❤️ Show My Liked Thoughts"}
+          {showLikedOnly ? "🤍 Show All Thoughts" : "❤️ Show My Liked Thoughts"}
         </button>
       )}
       <FormCard
