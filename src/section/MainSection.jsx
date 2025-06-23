@@ -25,10 +25,10 @@ export const MainSection = () => {
 
   // const url = "https://happy-thoughts-api-4ful.onrender.com/thoughts"
   //Local API
-  const url = "http://localhost:8080/thoughts"
+  // const url = "http://localhost:8080/thoughts"
 
   //My render url 
-  // const url = "https://js-project-api-mk0z.onrender.com/thoughts"
+  const url = "https://js-project-api-mk0z.onrender.com/thoughts"
 
 
   const fetchData = async () => {
@@ -210,8 +210,6 @@ export const MainSection = () => {
         onSubmit={addMessage}
         apiError={apiError} />
 
-      {isLoading && <Loader />}
-      {likedCount > 0 && <LikeCount likeCount={likedCount} />}
 
       {showAuthError && <AuthorizationError errMessage={apiError}
         onClose={handleCloseAuthError} />}
@@ -261,6 +259,9 @@ export const MainSection = () => {
           <option value="20">20+ hearts</option>
         </select>
       </div>
+
+      {isLoading && <Loader />}
+      {likedCount > 0 && <LikeCount likeCount={likedCount} />}
 
       <MessageList
         userId={userId}

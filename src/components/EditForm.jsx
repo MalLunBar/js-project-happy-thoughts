@@ -4,18 +4,17 @@ import { useEffect, useState } from "react";
 
 export const EditForm = ({ onCancel, messageId, onEdit, initialMessage }) => {
   const [message, setMessage] = useState(initialMessage || "")
-  // const url = "https://js-project-api-mk0z.onrender.com/thoughts"
+
+  const url = "https://js-project-api-mk0z.onrender.com/thoughts"
+
   // Local API
-  const url = "http://localhost:8080/thoughts"
+  // const url = "http://localhost:8080/thoughts"
 
 
   const handleSubmit = (e) => {
     e.preventDefault()
     onEdit(messageId, message)
-    // Add your save logic here
 
-    // const textarea = e.target.querySelector("#edit-thought")
-    // You can use textarea.value here
   }
 
   return (
@@ -38,6 +37,7 @@ export const EditForm = ({ onCancel, messageId, onEdit, initialMessage }) => {
           />
         </button>
       </div>
+
       <label
         className="sr-only"
         htmlFor="edit-thought"
@@ -52,11 +52,10 @@ export const EditForm = ({ onCancel, messageId, onEdit, initialMessage }) => {
         onChange={(e) => setMessage(e.target.value)}
         autoFocus
       ></textarea>
+
       <div className="flex gap-2 items-center justify-end">
         <button
           type="submit"
-
-          // disabled={message.length < 5 || message.length > 140}
           className="text-sm bg-red-400 text-white px-4 py-2 rounded-2xl hover:bg-red-600"
         >
           Save
