@@ -6,7 +6,6 @@ export const FormCard = ({ onSubmit, apiError }) => {
   const [message, setMessage] = useState("")
   const [localError, setLocalError] = useState("")
   const [count, setCount] = useState(0)
-  const isLoggedIn = !!localStorage.getItem("accessToken")
   const maxChars = 140
   const minChars = 5
 
@@ -22,7 +21,7 @@ export const FormCard = ({ onSubmit, apiError }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     setLocalError("")
-    
+
     if (!validateMessage(message)) {
       return
     }
@@ -42,7 +41,6 @@ export const FormCard = ({ onSubmit, apiError }) => {
       setLocalError("")
     }
   }
-
 
   const handleKeyDown = (event) => {
 
@@ -65,7 +63,7 @@ export const FormCard = ({ onSubmit, apiError }) => {
             {count}/{maxChars}
           </p>
         </div>
-        
+
         <textarea
           id="happy"
           className="resize-none bg-white w-full border-2 border-gray-300 focus:outline-red-200"

@@ -44,7 +44,7 @@ export const SignUpForm = () => {
       })
       .catch(err => {
         console.error("Error creating account:", err)
-        // Handle error, e.g., show an error message to the user
+
       })
   }
 
@@ -52,10 +52,13 @@ export const SignUpForm = () => {
     <form
       onSubmit={handleSubmit}
       className="flex flex-col gap-4 m-4 border p-4 shadow-[10px_10px] shadow-black bg-gray-100 rounded-xs">
+      
       <CloseButton />
+
       <h1 className="text-2xl font-bold text-center mb-2">
         Sign up for an account
       </h1>
+
       <FormInput
         id={"name"}
         type={"name"}
@@ -91,6 +94,7 @@ export const SignUpForm = () => {
         required={true}
         autoComplete="off"
       />
+      
       <button
         type="submit"
         className="bg-blue-500 text-white p-2 rounded">

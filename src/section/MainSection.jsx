@@ -8,8 +8,6 @@ import { AuthorizationError } from "../components/AuthorizationError"
 import { CloseButton } from "../components/CloseButton"
 
 
-
-
 export const MainSection = () => {
   const [messages, setMessages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -135,8 +133,6 @@ export const MainSection = () => {
   }
 
 
-
-
   const editMessage = async (id, message) => {
     const accessToken = localStorage.getItem("accessToken")
     setApiError("")
@@ -159,6 +155,7 @@ export const MainSection = () => {
       setApiError("Could not update message. Please try again later.")
     }
   }
+
 
   const deleteMessage = async (id) => {
     const accessToken = localStorage.getItem("accessToken")
@@ -206,22 +203,21 @@ export const MainSection = () => {
           {showLikedOnly ? "🤍 Show All Thoughts" : "❤️ Show My Liked Thoughts"}
         </button>
       )}
+
       <FormCard
         onSubmit={addMessage}
         apiError={apiError} />
-
 
       {showAuthError && <AuthorizationError errMessage={apiError}
         onClose={handleCloseAuthError} />}
 
       {likeError && (
         <>
-          {/* Optional: backdrop */}
+          {/* Full-screen overlay */}
           <div className="flex fixed inset-0 bg-black opacity-50 z-40" />
 
-          {/* Centered error box */}
           <div className="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 bg-white text-red-700 border border-red-300 shadow-xl rounded-lg px-6 py-4 text-center max-w-sm">
-            {/* Your reusable CloseButton */}
+
             <div className="absolute top-2 right-2">
               <CloseButton
                 onClick={() => setLikeError("")}

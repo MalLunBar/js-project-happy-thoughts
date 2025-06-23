@@ -1,5 +1,4 @@
 import { motion } from "framer-motion"
-import React from "react";
 
 const containerVariants = {
   initial: {
@@ -39,31 +38,31 @@ const dotTransition = {
 
 export const Loader = () => {
   return (
-  
-      <div className="w-full flex items-center justify-center pt-10">
-        <p className="font-thin text-2xl">Loading</p>
-        <motion.div
-          className="w-30 h-20 flex justify-around"
-          variants={containerVariants}
-          initial="initial"
-          animate="animate"
-        >
-          <motion.span
-            className="w-5 h-5 bg-red-200 rounded-full"
-            variants={dotVariants}
-            transition={dotTransition}
-          />
-          <motion.span
-            className="w-5 h-5 bg-red-200 rounded-full"
-            variants={dotVariants}
-            transition={dotTransition}
-          />
-          <motion.span
-            className="w-5 h-5 bg-red-200 rounded-full"
-            variants={dotVariants}
-            transition={dotTransition}
-          />
-        </motion.div>
-      </div>
+
+    <div className="w-full flex items-center justify-center pt-10">
+      <p className="font-thin text-2xl">Loading</p>
+      <motion.div
+        className="w-30 h-20 flex justify-around"
+        variants={containerVariants}
+        initial="initial"
+        animate="animate"
+      >
+        <motion.span
+          className="w-5 h-5 bg-red-200 rounded-full"
+          variants={dotVariants}
+          transition={dotTransition}
+        />
+        <motion.span
+          className="w-5 h-5 bg-red-200 rounded-full"
+          variants={dotVariants}
+          transition={dotTransition}
+        />
+        <motion.span
+          className="w-5 h-5 bg-red-200 rounded-full"
+          variants={dotVariants}
+          transition={dotTransition}
+        />
+      </motion.div>
+    </div>
   )
 }

@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-
-
 export const EditForm = ({ onCancel, messageId, onEdit, initialMessage }) => {
   const [message, setMessage] = useState(initialMessage || "")
 
