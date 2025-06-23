@@ -11,7 +11,7 @@ export const Header = () => {
   }
 
   return (
-    <header className="bg-red-100 text-white p-4">
+    <header className="bg-pink-800 text-white p-4">
       <h1 className="text-2xl font-bold">
         <Link
           to="/" className="hover:underline">Happy Thoughts

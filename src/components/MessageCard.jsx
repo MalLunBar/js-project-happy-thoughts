@@ -65,10 +65,10 @@ export const MessageCard = ({ message, onLike, onDelete, onEdit, userId }) => {
             onLike={onLike}
             likes={message.hearts}
           />
-          <p className="text-gray-400 text-sm">x {message.hearts}</p>
+          <p className="text-slate-500 text-sm">x {message.hearts}</p>
         </div>
 
-        <p className="text-gray-300 text-sm max-w-1/2 text-right" >{formatDistanceToNow(new Date(message.createdAt), { addSuffix: true })}</p>
+        <p className="text-slate-500 text-sm max-w-1/2 text-right" >{formatDistanceToNow(new Date(message.createdAt), { addSuffix: true })}</p>
       </div>
     </div>
   )

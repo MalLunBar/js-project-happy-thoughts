@@ -1,9 +1,11 @@
+import { useState, useEffect } from "react"
+
 import { FormCard } from "../components/FormCard"
 import { MessageList } from "../components/MessasgeList"
-import { useState, useEffect } from "react"
 import { Loader } from "../components/Loader"
 import { LikeCount } from "../components/LikeCount"
 import { AuthorizationError } from "../components/AuthorizationError"
+import { CloseButton } from "../components/CloseButton"
 
 
 
@@ -17,6 +19,8 @@ export const MainSection = () => {
   const [sortOrder, setSortOrder] = useState("desc")
   const [minHearts, setMinHearts] = useState("")
   const [showLikedOnly, setShowLikedOnly] = useState(false)
+  const [likeError, setLikeError] = useState("")
+
   const userId = localStorage.getItem("userId")
 
   // const url = "https://happy-thoughts-api-4ful.onrender.com/thoughts"
@@ -100,6 +104,7 @@ export const MainSection = () => {
   const likeMessage = async (id) => {
     setApiError("")
     const accessToken = localStorage.getItem("accessToken")
+
     try {
       const res = await fetch(`${url}/${id}/like`, {
         method: "PATCH",
@@ -108,21 +113,29 @@ export const MainSection = () => {
           ...(accessToken && { Authorization: accessToken })
         }
       })
+
       if (!res.ok) {
         const error = await res.json()
         throw new Error(error.message || "Failed to like the thought")
       }
+
       const updatedLikes = await res.json()
+
       setMessages(prev =>
         prev.map(msg =>
           msg._id === id ? { ...msg, hearts: updatedLikes.response.hearts } : msg
         )
       )
+      setLikeError("")
+
     } catch (err) {
       console.error("Could not like message", err)
-      setApiError("Could not like message. Please try again later")
+      setLikeError(err.message || "Could not like message. Please try again later.")
     }
   }
+
+
+
 
   const editMessage = async (id, message) => {
     const accessToken = localStorage.getItem("accessToken")
@@ -203,15 +216,43 @@ export const MainSection = () => {
       {showAuthError && <AuthorizationError errMessage={apiError}
         onClose={handleCloseAuthError} />}
 
+      {likeError && (
+        <>
+          {/* Optional: backdrop */}
+          <div className="flex fixed inset-0 bg-black opacity-50 z-40" />
+
+          {/* Centered error box */}
+          <div className="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 bg-white text-red-700 border border-red-300 shadow-xl rounded-lg px-6 py-4 text-center max-w-sm">
+            {/* Your reusable CloseButton */}
+            <div className="absolute top-2 right-2">
+              <CloseButton
+                onClick={() => setLikeError("")}
+              />
+            </div>
+            <p className="mt-2">{likeError}</p>
+          </div>
+        </>
+      )}
+
       <div className="flex justify-between items-center mb-4 my-4">
+        <label
+          htmlFor="sortOrder"
+          className="sr-only">Sort on newest or oldest First
+        </label>
         <select
+          id="sortOrder"
           onChange={(e) => setSortOrder(e.target.value)}
           value={sortOrder}>
           <option value="desc">Newest First</option>
           <option value="asc">Oldest First</option>
         </select>
 
+        <label
+          htmlFor="minHearts"
+          className="sr-only">Filter by minimum hearts
+        </label>
         <select
+          id="minHearts"
           onChange={(e) => setMinHearts(e.target.value)}
           value={minHearts}>
           <option value="">All hearts</option>

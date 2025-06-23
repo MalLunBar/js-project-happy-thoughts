@@ -61,7 +61,7 @@ export const FormCard = ({ onSubmit, apiError }) => {
           <label
             htmlFor="happy">What's making you happy right now?
           </label>
-          <p className={`text-xs ${count === maxChars ? 'text-red-500' : 'text-gray-500'}`}>
+          <p className={`text-xs ${count === maxChars ? 'text-red-500' : 'text-slate-600'}`}>
             {count}/{maxChars}
           </p>
         </div>
