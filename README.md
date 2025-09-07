@@ -18,7 +18,7 @@ A fullstack project inspired by Twitter, where users can share short “happy th
 
 
 
-## Tech Stack 🛠
+## Tech Stack 🛠️
 
 -   **Frontend:** React, Hooks (useState, useEffect), Tailwind CSS, Framer Motion
 -   **Backend:** Node.js, Express, MongoDB (Mongoose)
